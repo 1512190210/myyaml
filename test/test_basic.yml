@@ -1,0 +1,23 @@
+---
+Time: 2001-11-23 15:02:31 -5
+User: ed
+Warning: "A slightly different error message."
+---
+Date: 2001-11-23 15:03:17 -5
+User: ed
+Fatal: Unknown variable "bar"
+Stack:
+  - file: TopClass.py
+    line: 23
+    code: x = MoreObject("345\n")
+...
+Mark McGwire: {hr: 65, avg: 0.278}
+Sammy Sosa: {
+    hr: 63,
+    avg: 0.288
+  }
+...
+---
+- [name        , hr, avg  ]
+- [Mark McGwire, 65, 0.278]
+- [Sammy Sosa  , 63, 0.288]

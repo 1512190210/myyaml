@@ -1,0 +1,126 @@
+# ´ËÎÄ¼þÓÉmakelocal.sh×Ô¶¯Éú³É
+MAKEFILE_POSTFIX=.WINDOWS-MinGW
+# ´ËÎÄ¼þÓÉmakeobj.sh×Ô¶¯Éú³É
+############################################################
+# ÏîÄ¿Ãû : 
+# Ä£¿éÃû : 
+# ±¸  ×¢ : 
+############################################################
+
+###### Ô´ÎÄ¼þÅäÖÃÇø
+# ±àÒëºê
+AR		=	ar
+AFLAGS		=	rv
+SOFLAGS		=	-shared -fPIC
+ESOFLAGS	=	
+
+# cÔ´´úëÎÄ¼þºê¼°ÍÆµ¼¹æÔò
+CC		=	gcc -g -fPIC -Wall -Werror -O2
+CC_NOWARN	=	gcc -g -fPIC -O2
+
+c_FILE_o	=	$(c_FILE:.c=.o)
+c_FILE2_o	=	$(c_FILE2:.c=.o)
+c_FILE3_o	=	$(c_FILE3:.c=.o)
+c_FILE4_o	=	$(c_FILE4:.c=.o)
+c_FILE5_o	=	$(c_FILE5:.c=.o)
+c_FILE_CLEAN	=	$(c_FILE_o) $(c_FILE2_o) $(c_FILE3_o) $(c_FILE4_o) $(c_FILE5_o)
+
+.SUFFIXES:.c
+.c.o	:
+	$(CC) $(CFLAGS) -c $<
+
+c_FILE		=	\
+			scanner.c \
+			parser.c \
+			yaml.c \
+
+###### Ä¿±êÎÄ¼þ¡¢°²×°Ä¿¼ÅäÖÃÇø
+include ../makeinstall
+LIB		=	libmyyaml.so
+LIBINST		=	$(_LIBINST)
+HDER		=	myyaml.h
+HDERINST	=	$(_HDERINST)
+
+###### ±àÒëÑ¡Ïî
+CFLAGS		=	$(_CFLAGS)
+
+###### Á´½ÓÑ¡Ïî
+LFLAGS		=	$(_LFLAGS)
+
+###### ¶îÍâºê¶¨ÒåÇø
+CLEAN_ADDITION	=
+
+###### ¼ÓÔØmktplÄ£°å¿â
+# ×îÖÕÄ¿±êÁÐ±í
+all	:	$(OBJ) $(OBJ2) $(LIB) $(LIB2) $(SQL) $(NOCLEAN_OBJ) $(NOINST_OBJ) $(BIN) $(BIN2)
+
+# ÎÄ¼þÏµÍ³ºê
+CD		=	cd
+RM		=	del
+CP		=	mcopy
+MV		=	move
+MKDIR		=	mkdir
+
+# Ô¤¶¨ÒåÔ´ÎÄ¼þÇåÀíÉ¾³ý¹ØÁªºê
+_FILE_CLEAN	=	$(c_FILE_CLEAN) $(cpp_FILE_CLEAN) $(SQC_FILE_CLEAN) $(ec_FILE_CLEAN) $(ec_FILE2_CLEAN) $(csm_FILE_CLEAN) $(c_html_FILE_CLEAN) $(cui_FILE_CLEAN) $(dtd_FILE_CLEAN) $(prt_FILE_CLEAN) $(fmd_FILE_CLEAN) $(smd_FILE_CLEAN) $(def_FILE_CLEAN) $(act_FILE_CLEAN)
+
+# ÇåÀíÉ¾³ý¹æÔò
+clean		:
+	$(RM) $(_FILE_CLEAN) $(BIN) $(BIN2) $(LIB) $(LIB2) $(OBJ) $(OBJ2) $(NOINST_OBJ) $(CLEAN_ADDITION)
+
+
+# Ô¤¶¨ÒåÔ´´úëÈ±Ê¡Í·ÎÄ¼þºê
+DFTHDER		=	$(csm_FILE_DFTHDER) $(cui_FILE_DFTHDER) $(dtd_FILE_DFTHDER) $(prt_FILE_DFTHDER) $(fmd_FILE_DFTHDER) $(smd_FILE_DFTHDER) $(def_FILE_DFTHDER) $(act_FILE_DFTHDER)
+
+# Ìá½»°²×°¹æÔò
+install		:	all
+
+ifneq ($(strip $(LIB)),)
+ifneq ($(strip $(LIBINST)),)
+	-$(MKDIR) "$(LIBINST)"
+	$(CP) $(LIB) "$(LIBINST)/"
+endif
+endif
+ifneq ($(strip $(LIB2)),)
+ifneq ($(strip $(LIBINST2)),)
+	-$(MKDIR) "$(LIBINST2)"
+	$(CP) $(LIB2) "$(LIBINST2)/"
+endif
+endif
+
+ifneq ($(strip $(HDER)),)
+ifneq ($(strip $(HDERINST)),)
+	-$(MKDIR) "$(HDERINST)"
+	$(CP) $(HDER) "$(HDERINST)/"
+endif
+endif
+ifneq ($(strip $(HDER2)),)
+ifneq ($(strip $(HDERINST2)),)
+	-$(MKDIR) "$(HDERINST2)"
+	$(CP) $(HDER2) "$(HDERINST2)/"
+endif
+endif
+
+ifneq ($(strip $(DFTHDER)),)
+ifneq ($(strip $(DFTHDERINST)),)
+	-$(MKDIR) "$(DFTHDERINST)"
+	$(CP) $(DFTHDER) "$(DFTHDERINST)/"
+endif
+endif
+
+
+# Ô¤¶¨ÒåÔ´´úëÈ±Ê¡Í·ÎÄ¼þºê
+DFTHDER		=	$(csm_FILE_DFTHDER) $(cui_FILE_DFTHDER) $(dtd_FILE_DFTHDER) $(prt_FILE_DFTHDER) $(fmd_FILE_DFTHDER) $(smd_FILE_DFTHDER) $(def_FILE_DFTHDER) $(act_FILE_DFTHDER)
+
+# Ìá½»°²×°¹æÔò
+uninstall		:
+
+
+
+
+
+
+###### Ä¿±êÎÄ¼þÒÀÀµ¹ØÏµ
+libmyyaml.so		:	$(c_FILE_o)
+	$(CC) -o $@ $(c_FILE_o) $(SOFLAGS) $(LFLAGS)
+
